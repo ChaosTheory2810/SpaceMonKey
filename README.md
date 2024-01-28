@@ -56,7 +56,7 @@ FOR ANDROID
 
 FOR APPLE USERS
 (this requires additional hardware)
-* 1. Get a PC
-* 2. Get an android device
-* 3. Follow the instructions for Windows or for Android
+* 1: Get a PC
+* 2: Get an android device
+* 3: Follow the instructions for Windows or for Android
 (sorry)
