@@ -1,0 +1,138 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://animations/player_fly.tres" type="Animation" id=1]
+[ext_resource path="res://animations/player_idle.tres" type="Animation" id=2]
+[ext_resource path="res://assets/art/space_monkey_sprite.png" type="Texture" id=3]
+[ext_resource path="res://scripts/player.gd" type="Script" id=4]
+[ext_resource path="res://assets/sounds/fly.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/sounds/hit.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/art/bitmapbg.png" type="Texture" id=7]
+[ext_resource path="res://assets/art/Flame.png" type="Texture" id=8]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 23.4355
+height = 34.0
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("player_sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("player_sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.133065, 0.278226, 0.419355, 0.564516, 0.725806, 0.866935, 1 )
+colors = PoolColorArray( 1, 0, 0.811765, 1, 0.631373, 0, 1, 1, 0.0862745, 0, 1, 1, 0, 0.663086, 1, 1, 0, 1, 0.0478516, 1, 0.984314, 1, 0, 0.470588, 1, 0, 0, 0.235294, 1, 0, 0, 0.0156863 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 16.57
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 50.0
+angular_velocity = 180.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_random = 1.0
+color_ramp = SubResource( 7 )
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("exhaust_sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "exhaust"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("exhaust_sprite:rotation_degrees")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 280.0, 210.0, 70.0, 140.0, 360.0 ]
+}
+
+[node name="player" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource( 4 )
+
+[node name="player_sprite" type="Sprite" parent="."]
+position = Vector2( 0, -5 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+hframes = 10
+frame = 1
+
+[node name="player_collision" type="CollisionShape2D" parent="."]
+rotation = -0.117567
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "player_fly"
+anims/RESET = SubResource( 2 )
+anims/player_fly = ExtResource( 1 )
+anims/player_idle = ExtResource( 2 )
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="fly" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( -30, 21 )
+process_material = SubResource( 5 )
+texture = ExtResource( 7 )
+
+[node name="exhaust_sprite" type="Sprite" parent="."]
+position = Vector2( -29, 21 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 8 )
+
+[node name="exhaust" type="AnimationPlayer" parent="."]
+autoplay = "exhaust"
+anims/RESET = SubResource( 8 )
+anims/exhaust = SubResource( 9 )
