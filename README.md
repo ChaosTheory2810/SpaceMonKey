@@ -53,3 +53,10 @@ FOR ANDROID
 * 16: navigate to the file on your Android device
 * 17: open the file and choose Install
 * 18: If a warning appears choose 'More Options' and 'Install Anyway'.
+
+FOR APPLE USERS
+(this requires additional hardware)
+* 1. Get a PC
+* 2. Get an android device
+* 3. Follow the instructions for Windows or for Android
+(sorry)
